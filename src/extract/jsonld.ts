@@ -87,7 +87,7 @@ function flattenGraphEntities(obj: Record<string, unknown>): Record<string, unkn
     // Build @id index for cross-reference resolution
     const idIndex = new Map<string, Record<string, unknown>>();
     for (const entity of entities) {
-      const id = entity['@id'];
+      const id = (entity as Record<string, unknown>)['@id'];
       if (typeof id === 'string') {
         idIndex.set(id, entity);
       }
