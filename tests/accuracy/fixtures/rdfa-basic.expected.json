@@ -1,0 +1,13 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["Product"],
+      "format": "rdfa",
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 0
+}

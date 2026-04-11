@@ -1,0 +1,12 @@
+{
+  "isValid": true,
+  "entities": [
+    { "types": ["Product"], "format": "json-ld", "errors": [], "warnings": [] },
+    { "types": ["Organization"], "format": "json-ld", "errors": [], "warnings": [] },
+    { "types": ["Event"], "format": "json-ld", "errors": [], "warnings": [] },
+    { "types": ["Person"], "format": "json-ld", "errors": [], "warnings": [] }
+  ],
+  "errorCount": 0,
+  "warningCount": 0,
+  "_note": "All @context forms are accepted: https, https+slash, http, @vocab object"
+}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Context Variations Test</title>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Product","name":"HTTPS no slash"}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org/","@type":"Organization","name":"HTTPS with slash"}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"http://schema.org","@type":"Event","name":"HTTP no slash"}
+  </script>
+  <script type="application/ld+json">
+  {"@context":{"@vocab":"https://schema.org/"},"@type":"Person","name":"Vocab form"}
+  </script>
+</head>
+<body></body>
+</html>

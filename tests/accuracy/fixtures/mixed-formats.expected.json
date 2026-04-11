@@ -1,0 +1,10 @@
+{
+  "isValid": true,
+  "entities": [
+    { "types": ["Article"], "format": "json-ld", "errors": [], "warnings": [] },
+    { "types": ["Organization"], "format": "microdata", "errors": [], "warnings": [] }
+  ],
+  "errorCount": 0,
+  "warningCount": 0,
+  "_note": "Both JSON-LD and Microdata extracted from the same page"
+}

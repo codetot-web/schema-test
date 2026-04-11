@@ -64,6 +64,7 @@
     "jsonld": "^8.3.0",
     "microdata-node": "^2.0.0",
     "n3": "^1.17.0",
+    "rdfa-streaming-parser": "^3.0.0",
     "undici": "^6.0.0"
   },
   "peerDependencies": {
