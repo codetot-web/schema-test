@@ -1,10 +1,9 @@
 {
   "isValid": false,
   "entities": [
-    { "types": ["Organization"], "format": "json-ld", "errors": [{"code": "INVALID_VALUE_TYPE"}], "warnings": [] },
-    { "types": ["Product"], "format": "json-ld", "errors": [], "warnings": [] }
+    { "types": ["Organization"], "format": "json-ld", "errors": [{"code": "INVALID_VALUE_TYPE"}], "warnings": [] }
   ],
   "errorCount": 1,
   "warningCount": 0,
-  "_note": "makesOffer expects Offer but @id resolves to Product — INVALID_VALUE_TYPE error, matching SDTT INVALID_OBJECT"
+  "_note": "makesOffer expects Offer but @id resolves to Product — INVALID_VALUE_TYPE error. Product entity is deduplicated since it was already validated as nested child."
 }

@@ -18,14 +18,14 @@ describe('Property Checker', () => {
   it('warns on property not valid for type', () => {
     const issues = checkProperty('author', ['Product'], 'Product');
     expect(issues).toHaveLength(1);
-    expect(issues[0]!.severity).toBe('warning');
+    expect(issues[0]!.severity).toBe('error');
     expect(issues[0]!.code).toBe('UNKNOWN_PROPERTY');
   });
 
   it('warns on completely unknown properties', () => {
     const issues = checkProperty('fooBarBaz', ['Product'], 'Product');
     expect(issues).toHaveLength(1);
-    expect(issues[0]!.severity).toBe('warning');
+    expect(issues[0]!.severity).toBe('error');
     expect(issues[0]!.code).toBe('UNKNOWN_PROPERTY');
   });
 

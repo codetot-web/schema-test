@@ -1,17 +1,17 @@
 {
-  "isValid": true,
+  "isValid": false,
   "entities": [
     {
       "types": ["Product"],
       "format": "json-ld",
-      "errors": [],
-      "warnings": [
+      "errors": [
         { "code": "UNKNOWN_PROPERTY", "property": "customProperty" },
         { "code": "UNKNOWN_PROPERTY", "property": "anotherFake" }
-      ]
+      ],
+      "warnings": []
     }
   ],
-  "errorCount": 0,
-  "warningCount": 2,
-  "_note": "Unknown properties trigger warnings, NOT errors. isValid remains true."
+  "errorCount": 2,
+  "warningCount": 0,
+  "_note": "Unknown properties are errors (INVALID_PREDICATE in SDTT), matching validator.schema.org behavior."
 }

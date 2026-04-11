@@ -131,9 +131,34 @@ function validateHtml(html: string, formats?: SchemaFormat[]): ValidationResult 
   const formatsFound = new Set<SchemaFormat>();
   const typesFound = new Set<string>();
 
+  // Track validated entity @ids to avoid duplicate error counting
+  // when the same entity appears as both a top-level @graph item
+  // and a nested @id reference
+  const sharedVisited = new Set<unknown>();
+  const validatedIds = new Set<string>();
+  const validatedByIdCache = new Map<string, ValidatedEntity>();
+
   for (const entity of parsedEntities) {
-    const validated = validateEntity(entity.types, entity.format, entity.properties, entity.id);
+    // Skip if this entity was already fully validated via @id resolution
+    // from a parent entity processed earlier in the loop
+    if (entity.id && (validatedIds.has(entity.id) || sharedVisited.has(entity.id))) {
+      const cached = validatedByIdCache.get(entity.id);
+      if (cached) {
+        validatedEntities.push(cached);
+        formatsFound.add(entity.format);
+        for (const t of entity.types) typesFound.add(t);
+        // Don't re-add errors/warnings — already counted
+      }
+      continue;
+    }
+
+    const validated = validateEntity(entity.types, entity.format, entity.properties, entity.id, undefined, sharedVisited);
     validatedEntities.push(validated);
+
+    if (entity.id) {
+      validatedIds.add(entity.id);
+      validatedByIdCache.set(entity.id, validated);
+    }
 
     formatsFound.add(entity.format);
     for (const t of entity.types) typesFound.add(t);
@@ -200,12 +225,21 @@ function validateEntity(
       if (typeof val === 'object' && val !== null && !Array.isArray(val)) {
         const nested = val as Record<string, unknown>;
 
-        if (visitedSet.has(nested)) {
-          // Cycle detected, skip
+        // Always check value type (e.g., makesOffer expects Offer, got Product)
+        // even if this entity was already validated elsewhere
+        const nestedValueIssues = checkValue(propName, nested, entityPath);
+        propIssues.push(...nestedValueIssues);
+
+        // Check by both object reference and @id string
+        const nestedIdStr = typeof nested['@id'] === 'string' ? nested['@id'] as string : undefined;
+        if (visitedSet.has(nested) || (nestedIdStr && visitedSet.has(nestedIdStr))) {
+          // Already validated this entity — skip recursive validation
+          // but keep the value type check above (it's per-property, not per-entity)
           resolvedValues.push('[Circular Reference]');
           continue;
         }
         visitedSet.add(nested);
+        if (nestedIdStr) visitedSet.add(nestedIdStr);
 
         const nestedTypes = extractTypesFromValue(nested);
         const nestedProperties = new Map<string, unknown[]>();
@@ -226,10 +260,6 @@ function validateEntity(
         );
 
         resolvedValues.push(nestedEntity);
-
-        // Check nested entity type against property's expected types
-        const nestedValueIssues = checkValue(propName, nested, entityPath);
-        propIssues.push(...nestedValueIssues);
 
         // Propagate nested errors/warnings
         entityErrors.push(...nestedEntity.errors);

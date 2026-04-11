@@ -7,7 +7,11 @@ import { isKnownProperty, isDeprecatedProperty } from '../vocab/properties.js';
 
 /**
  * Check if a property is valid for the given type(s).
- * Unknown properties trigger warnings (not errors), matching SDTT behavior.
+ *
+ * SDTT behavior (confirmed via testing):
+ * - Property not in Schema.org vocab at all → INVALID_PREDICATE (error)
+ * - Property exists in vocab but not valid for this type → INVALID_PREDICATE (error)
+ * - Both are treated as errors, matching SDTT's INVALID_PREDICATE with ERROR severity.
  */
 export function checkProperty(
   propertyName: string,
@@ -24,7 +28,7 @@ export function checkProperty(
   if (!validProps.has(propertyName)) {
     if (!isKnownProperty(propertyName)) {
       issues.push({
-        severity: 'warning',
+        severity: 'error',
         code: IssueCode.UNKNOWN_PROPERTY,
         message: `The property "${propertyName}" is not recognized by Schema.org.`,
         path: `${entityPath}.${propertyName}`,
@@ -32,7 +36,7 @@ export function checkProperty(
       });
     } else {
       issues.push({
-        severity: 'warning',
+        severity: 'error',
         code: IssueCode.UNKNOWN_PROPERTY,
         message: `The property "${propertyName}" is not expected on type ${entityTypes.join(', ')}.`,
         path: `${entityPath}.${propertyName}`,

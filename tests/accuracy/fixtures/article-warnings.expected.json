@@ -1,18 +1,19 @@
 {
-  "isValid": true,
+  "isValid": false,
   "entities": [
     {
       "types": ["Article"],
       "format": "json-ld",
-      "errors": [],
-      "warnings": [
+      "errors": [
         { "code": "UNKNOWN_PROPERTY", "property": "customField" },
-        { "code": "UNKNOWN_PROPERTY", "property": "episodes" },
+        { "code": "UNKNOWN_PROPERTY", "property": "episodes" }
+      ],
+      "warnings": [
         { "code": "DEPRECATED_PROPERTY", "property": "episodes" }
       ]
     }
   ],
-  "errorCount": 0,
-  "warningCount": 3,
-  "_note": "Article with unknown customField and episodes (which belongs to TVSeries) triggers UNKNOWN_PROPERTY + DEPRECATED_PROPERTY warnings."
+  "errorCount": 2,
+  "warningCount": 1,
+  "_note": "Unknown properties are errors (matching SDTT). episodes is also deprecated (warning)."
 }

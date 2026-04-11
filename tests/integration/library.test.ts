@@ -72,7 +72,7 @@ describe('Library Integration', () => {
     expect(result.errors.some(e => e.code === 'UNKNOWN_TYPE')).toBe(true);
   });
 
-  it('detects unknown properties as warnings (not errors)', () => {
+  it('detects unknown properties as errors', () => {
     const html = `
       <html><head>
         <script type="application/ld+json">
@@ -86,9 +86,9 @@ describe('Library Integration', () => {
       </head><body></body></html>
     `;
     const result = validateMarkup(html);
-    // Unknown properties are warnings, not errors
-    expect(result.isValid).toBe(true);
-    expect(result.warnings.some(w => w.code === 'UNKNOWN_PROPERTY')).toBe(true);
+    // Unknown properties are errors (matching SDTT INVALID_PREDICATE behavior)
+    expect(result.isValid).toBe(false);
+    expect(result.errors.some(e => e.code === 'UNKNOWN_PROPERTY')).toBe(true);
   });
 
   it('handles malformed JSON-LD gracefully', () => {
