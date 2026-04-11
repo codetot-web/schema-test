@@ -25,7 +25,7 @@ jobs:
             npm run test:accuracy
           fi
       - name: Create PR if changed
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           title: "chore: update Schema.org vocabulary"
           body: "Automated update from Schema.org latest release"
