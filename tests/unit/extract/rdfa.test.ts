@@ -69,4 +69,22 @@ describe('RDFa Extractor', () => {
     const product = result.blocks.find(b => b.data['@type'] === 'Product');
     expect(product).toBeDefined();
   });
+
+  it('extracts entity with multiple properties', () => {
+    const html = `
+      <html>
+      <body>
+        <div vocab="https://schema.org/" typeof="Person">
+          <span property="name">Jane Doe</span>
+          <span property="jobTitle">Engineer</span>
+        </div>
+      </body>
+      </html>
+    `;
+    const result = extractRdfa(html);
+    expect(result.blocks.length).toBeGreaterThanOrEqual(1);
+    const person = result.blocks.find(b => b.data['@type'] === 'Person');
+    expect(person).toBeDefined();
+    expect(person!.data['name']).toBe('Jane Doe');
+  });
 });

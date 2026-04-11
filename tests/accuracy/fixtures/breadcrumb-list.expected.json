@@ -1,0 +1,14 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["BreadcrumbList"],
+      "format": "json-ld",
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 0,
+  "_note": "BreadcrumbList with ListItem entries using position, name, and item — standard breadcrumb structured data pattern."
+}

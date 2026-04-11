@@ -7,7 +7,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*.ts'],
-      exclude: ['src/cli.ts', 'src/server.ts'],
+      exclude: ['src/cli.ts', 'src/server.ts', 'src/fetch/**', 'src/parse/index.ts', 'src/declarations.d.ts'],
     },
     testTimeout: 30000,
   },

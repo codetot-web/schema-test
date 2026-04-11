@@ -33,4 +33,20 @@ describe('Type Checker', () => {
     expect(issues).toHaveLength(1);
     expect(issues[0]!.type).toBe('NotReal');
   });
+
+  it('warns on deprecated types', () => {
+    // UserBlocks is superseded by InteractionCounter
+    const issues = checkTypes(['UserBlocks'], 'UserBlocks');
+    expect(issues).toHaveLength(1);
+    expect(issues[0]!.code).toBe('DEPRECATED_TYPE');
+    expect(issues[0]!.severity).toBe('warning');
+  });
+
+  it('handles mix of valid, unknown, and deprecated types', () => {
+    const issues = checkTypes(['Product', 'FakeType', 'UserBlocks'], 'mixed');
+    expect(issues).toHaveLength(2);
+    const codes = issues.map(i => i.code);
+    expect(codes).toContain('UNKNOWN_TYPE');
+    expect(codes).toContain('DEPRECATED_TYPE');
+  });
 });

@@ -44,9 +44,54 @@ describe('Value Checker', () => {
   });
 
   it('accepts nested entity with subtype', () => {
-    // author expects Person/Organization; Employee is a subtype of Person
-    // Actually let's test with a clear subtype case
     const issues = checkValue('author', { '@type': 'Person', name: 'Jane' }, 'Article');
+    expect(issues).toHaveLength(0);
+  });
+
+  it('accepts number value for number properties', () => {
+    const issues = checkValue('price', 29.99, 'Offer');
+    expect(issues).toHaveLength(0);
+  });
+
+  it('accepts boolean value for boolean properties', () => {
+    const issues = checkValue('isAccessibleForFree', true, 'Article');
+    expect(issues).toHaveLength(0);
+  });
+
+  it('handles null value as empty', () => {
+    const issues = checkValue('name', null, 'Product');
+    expect(issues).toHaveLength(1);
+    expect(issues[0]!.code).toBe('EMPTY_VALUE');
+  });
+
+  it('handles undefined value as empty', () => {
+    const issues = checkValue('name', undefined, 'Product');
+    expect(issues).toHaveLength(1);
+    expect(issues[0]!.code).toBe('EMPTY_VALUE');
+  });
+
+  it('returns no issues for unknown properties', () => {
+    const issues = checkValue('fakeProperty', 'value', 'Product');
+    expect(issues).toHaveLength(0);
+  });
+
+  it('accepts date strings for date properties', () => {
+    const issues = checkValue('startDate', '2024-06-15', 'Event');
+    expect(issues).toHaveLength(0);
+  });
+
+  it('accepts nested entity with multiple types', () => {
+    const issues = checkValue('author', { '@type': ['Person', 'Organization'], name: 'Both' }, 'Article');
+    expect(issues).toHaveLength(0);
+  });
+
+  it('accepts URL string where entity expected', () => {
+    const issues = checkValue('author', 'https://example.com/person/1', 'Article');
+    expect(issues).toHaveLength(0);
+  });
+
+  it('accepts nested entity without @type', () => {
+    const issues = checkValue('offers', { price: '10' }, 'Product');
     expect(issues).toHaveLength(0);
   });
 });

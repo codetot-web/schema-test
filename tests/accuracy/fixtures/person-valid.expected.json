@@ -1,0 +1,14 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["Person"],
+      "format": "json-ld",
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 0,
+  "_note": "Person with name, jobTitle, email, and url — all valid Schema.org properties."
+}

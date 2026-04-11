@@ -1,0 +1,14 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["FAQPage"],
+      "format": "json-ld",
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 0,
+  "_note": "FAQPage with nested Question and Answer entities — a standard Schema.org pattern for FAQ rich results."
+}

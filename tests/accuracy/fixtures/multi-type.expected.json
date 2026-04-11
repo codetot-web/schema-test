@@ -1,0 +1,14 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["Restaurant", "FoodEstablishment"],
+      "format": "json-ld",
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 0,
+  "_note": "Multiple @type values are valid. Restaurant and FoodEstablishment are both recognized Schema.org types."
+}
