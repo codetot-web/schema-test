@@ -1,0 +1,14 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["Product"],
+      "format": "json-ld",
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 0,
+  "_note": "All properties (name, url, description, image, identifier, sameAs) are inherited from Thing."
+}

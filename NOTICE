@@ -1,0 +1,11 @@
+schemacraft-validator
+Copyright 2026 Abdo Elbradey
+
+This project is a fork of Google Schemarama
+(https://github.com/google/schemarama)
+Original Copyright 2020 Google LLC
+Licensed under the Apache License, Version 2.0
+
+Schema.org vocabulary data is used under the Creative Commons
+Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0).
+See https://schema.org/docs/terms.html

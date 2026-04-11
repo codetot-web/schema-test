@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multiple JSON-LD Blocks Test</title>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Product","name":"Widget A","sku":"A001"}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"WidgetCorp","url":"https://example.com"}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]}
+  </script>
+</head>
+<body></body>
+</html>

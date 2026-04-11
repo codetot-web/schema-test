@@ -1,0 +1,17 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["Product"],
+      "format": "json-ld",
+      "errors": [],
+      "warnings": [
+        { "code": "UNKNOWN_PROPERTY", "property": "customProperty" },
+        { "code": "UNKNOWN_PROPERTY", "property": "anotherFake" }
+      ]
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 2,
+  "_note": "Unknown properties trigger warnings, NOT errors. isValid remains true."
+}

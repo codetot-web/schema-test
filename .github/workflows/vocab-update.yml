@@ -1,0 +1,33 @@
+name: Schema.org Vocabulary Update
+on:
+  schedule:
+    - cron: '0 8 * * 3'  # Every Wednesday at 8 AM
+  workflow_dispatch: {}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Check for vocabulary updates
+        run: npx tsx scripts/update-vocab.ts
+      - name: Run tests if vocabulary changed
+        run: |
+          if git diff --quiet src/vocab/data/; then
+            echo "No vocabulary changes"
+          else
+            npm test
+            npm run test:accuracy
+          fi
+      - name: Create PR if changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: "chore: update Schema.org vocabulary"
+          body: "Automated update from Schema.org latest release"
+          branch: chore/vocab-update
+          commit-message: "chore: update Schema.org vocabulary"

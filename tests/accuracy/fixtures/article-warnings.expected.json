@@ -1,0 +1,18 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["Article"],
+      "format": "json-ld",
+      "errors": [],
+      "warnings": [
+        { "code": "UNKNOWN_PROPERTY", "property": "customField" },
+        { "code": "UNKNOWN_PROPERTY", "property": "episodes" },
+        { "code": "DEPRECATED_PROPERTY", "property": "episodes" }
+      ]
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 3,
+  "_note": "Article with unknown customField and episodes (which belongs to TVSeries) triggers UNKNOWN_PROPERTY + DEPRECATED_PROPERTY warnings."
+}

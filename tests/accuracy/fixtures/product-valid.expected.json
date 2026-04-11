@@ -1,0 +1,35 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["Product"],
+      "format": "json-ld",
+      "properties": [
+        { "name": "name", "value": "Widget Pro", "hasError": false },
+        { "name": "description", "value": "The best widget ever made", "hasError": false },
+        { "name": "image", "value": "https://example.com/widget.jpg", "hasError": false },
+        { "name": "url", "value": "https://example.com/widget", "hasError": false },
+        {
+          "name": "brand",
+          "value": { "types": ["Brand"], "properties": [
+            { "name": "name", "value": "WidgetCorp", "hasError": false }
+          ]},
+          "hasError": false
+        },
+        {
+          "name": "offers",
+          "value": { "types": ["Offer"], "properties": [
+            { "name": "price", "value": "29.99", "hasError": false },
+            { "name": "priceCurrency", "value": "USD", "hasError": false },
+            { "name": "availability", "value": "https://schema.org/InStock", "hasError": false }
+          ]},
+          "hasError": false
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 0
+}

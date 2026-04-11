@@ -1,0 +1,17 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["Product"],
+      "format": "json-ld",
+      "errors": [],
+      "warnings": [
+        { "code": "EMPTY_VALUE", "property": "description" },
+        { "code": "EMPTY_VALUE", "property": "url" }
+      ]
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 2,
+  "_note": "Empty string values trigger EMPTY_VALUE warnings but do not affect isValid"
+}
