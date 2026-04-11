@@ -1,4 +1,4 @@
-// Copyright 2026 Abdo Elbradey
+// Copyright 2026 Abdullah Elbradey
 // Licensed under the Apache License, Version 2.0
 
 // Parse orchestrator — converts extracted data into RDF triples.

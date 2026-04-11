@@ -2,7 +2,7 @@
   "name": "schemacraft-validator",
   "version": "1.0.1",
   "description": "Schema.org structured data validator — accuracy-matched to validator.schema.org. Supports JSON-LD, Microdata, and RDFa.",
-  "author": "Abdo Elbradey",
+  "author": "Abdullah Elbradey",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
