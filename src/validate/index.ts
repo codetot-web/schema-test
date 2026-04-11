@@ -1,13 +1,14 @@
 // Copyright 2026 Abdo Elbradey
 // Licensed under the Apache License, Version 2.0
 
-import type {
-  ValidateOptions,
-  ValidationResult,
-  ValidatedEntity,
-  ValidatedProperty,
-  ValidationIssue,
-  SchemaFormat,
+import {
+  IssueCode,
+  type ValidateOptions,
+  type ValidationResult,
+  type ValidatedEntity,
+  type ValidatedProperty,
+  type ValidationIssue,
+  type SchemaFormat,
 } from '../types.js';
 import { extractAll } from '../extract/index.js';
 import { buildEntities } from './entity-builder.js';
@@ -45,6 +46,57 @@ export function validateMarkup(
 ): ValidationResult {
   const startTime = Date.now();
   const result = validateHtml(html, options?.formats);
+
+  return {
+    ...result,
+    duration: Date.now() - startTime,
+  };
+}
+
+/**
+ * Validate raw JSON-LD input (string or object) — no HTML wrapper needed.
+ * Accepts the same input you'd paste into validator.schema.org's code snippet box.
+ */
+export function validateJsonLd(
+  input: string | Record<string, unknown>,
+  options?: ValidateOptions,
+): ValidationResult {
+  const startTime = Date.now();
+
+  let data: unknown;
+  if (typeof input === 'string') {
+    try {
+      data = JSON.parse(input);
+    } catch (e) {
+      return {
+        timestamp: new Date().toISOString(),
+        duration: Date.now() - startTime,
+        isValid: false,
+        entities: [],
+        errors: [{
+          severity: 'error',
+          code: IssueCode.MALFORMED_JSONLD,
+          message: `Invalid JSON: ${(e as Error).message}`,
+        }],
+        warnings: [],
+        summary: {
+          totalEntities: 0,
+          totalTriples: 0,
+          types: [],
+          formats: [],
+          errorCount: 1,
+          warningCount: 0,
+        },
+      };
+    }
+  } else {
+    data = input;
+  }
+
+  // Wrap in a minimal HTML page so the existing pipeline handles it
+  const json = JSON.stringify(data);
+  const html = `<html><head><script type="application/ld+json">${json}</script></head><body></body></html>`;
+  const result = validateHtml(html, options?.formats ?? ['json-ld']);
 
   return {
     ...result,

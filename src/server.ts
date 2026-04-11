@@ -3,7 +3,7 @@
 
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import { validate, validateMarkup, validateBatch } from './validate/index.js';
+import { validate, validateMarkup, validateJsonLd, validateBatch } from './validate/index.js';
 import type { ValidateOptions } from './types.js';
 
 interface ServerOptions {
@@ -28,20 +28,23 @@ export function createServer(options?: ServerOptions) {
 
   app.post('/validate', async (req: Request, res: Response) => {
     try {
-      const { url, markup, options: validateOpts } = req.body as {
+      const { url, markup, jsonld, options: validateOpts } = req.body as {
         url?: string;
         markup?: string;
+        jsonld?: string | Record<string, unknown>;
         options?: ValidateOptions;
       };
 
-      if (!url && !markup) {
-        res.status(400).json({ error: 'Either "url" or "markup" is required' });
+      if (!url && !markup && !jsonld) {
+        res.status(400).json({ error: 'One of "url", "markup", or "jsonld" is required' });
         return;
       }
 
       const result = url
         ? await validate(url, validateOpts)
-        : validateMarkup(markup!, validateOpts);
+        : jsonld
+          ? validateJsonLd(jsonld, validateOpts)
+          : validateMarkup(markup!, validateOpts);
 
       res.json(result);
     } catch (error) {
