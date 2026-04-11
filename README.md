@@ -8,16 +8,19 @@
   <strong>Schema.org structured data validator — accuracy-matched to <a href="https://validator.schema.org">validator.schema.org</a></strong>
 </p>
 
+<!-- After npm publish, replace the static npm/license badges with dynamic ones:
+  npm version:  https://img.shields.io/npm/v/schemacraft-validator?style=flat-square&color=cb3837
+  npm license:  https://img.shields.io/npm/l/schemacraft-validator?style=flat-square
+  npm downloads: https://img.shields.io/npm/dm/schemacraft-validator?style=flat-square&color=blue
+-->
 <p align="center">
-  <a href="https://www.npmjs.com/package/schemacraft-validator"><img src="https://img.shields.io/npm/v/schemacraft-validator?style=flat-square&color=cb3837" alt="npm version" /></a>
-  <a href="https://github.com/Elbradey8/schemacraft-validator/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Elbradey8/schemacraft-validator/ci.yml?style=flat-square&label=CI" alt="CI" /></a>
-  <a href="https://www.npmjs.com/package/schemacraft-validator"><img src="https://img.shields.io/npm/dm/schemacraft-validator?style=flat-square&color=blue" alt="downloads" /></a>
-  <a href="https://github.com/Elbradey8/schemacraft-validator/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/schemacraft-validator?style=flat-square" alt="license" /></a>
-  <a href="https://github.com/Elbradey8/schemacraft-validator"><img src="https://img.shields.io/github/stars/Elbradey8/schemacraft-validator?style=flat-square" alt="stars" /></a>
-  <img src="https://img.shields.io/badge/TypeScript-strict-blue?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/npm-v1.1.0-cb3837?style=flat-square&logo=npm&logoColor=white" alt="npm version" />
+  <img src="https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square" alt="license" />
+  <img src="https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/node-%3E%3D18-339933?style=flat-square&logo=node.js&logoColor=white" alt="node" />
   <img src="https://img.shields.io/badge/coverage-88%25-brightgreen?style=flat-square" alt="coverage" />
   <img src="https://img.shields.io/badge/accuracy-100%25-brightgreen?style=flat-square" alt="accuracy" />
-  <img src="https://img.shields.io/badge/node-%3E%3D18-green?style=flat-square&logo=node.js&logoColor=white" alt="node" />
+  <img src="https://img.shields.io/badge/tests-203%20passing-brightgreen?style=flat-square" alt="tests" />
 </p>
 
 <p align="center">
