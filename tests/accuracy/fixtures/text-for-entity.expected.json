@@ -1,0 +1,19 @@
+{
+  "isValid": true,
+  "entities": [
+    {
+      "types": ["Article"],
+      "format": "json-ld",
+      "properties": [
+        { "name": "headline", "value": "Test Article", "hasError": false },
+        { "name": "author", "value": "John Doe", "hasError": false },
+        { "name": "datePublished", "value": "2024-01-15", "hasError": false }
+      ],
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "errorCount": 0,
+  "warningCount": 0,
+  "_note": "Text where entity (Person/Organization) is expected is tolerated per SDTT heuristic"
+}

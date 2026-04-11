@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nested Entities Test</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Widget Pro",
+    "brand": {
+      "@type": "Brand",
+      "name": "WidgetCorp"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "29.99",
+      "priceCurrency": "USD",
+      "seller": {
+        "@type": "Organization",
+        "name": "Widget Store"
+      }
+    },
+    "review": {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Jane Doe"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      }
+    }
+  }
+  </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "isValid": false,
+  "entities": [
+    {
+      "types": ["FooBarBaz"],
+      "format": "json-ld",
+      "errors": [
+        { "code": "UNKNOWN_TYPE", "severity": "error" }
+      ],
+      "warnings": []
+    }
+  ],
+  "errorCount": 1,
+  "warningCount": 0
+}

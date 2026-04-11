@@ -1,0 +1,13 @@
+tests/
+scripts/
+.github/
+docs/
+.claude/
+.eslintrc.json
+vitest.config.ts
+tsup.config.ts
+tsconfig.json
+coverage/
+.DS_Store
+CLAUDE.md
+AGENTS.md

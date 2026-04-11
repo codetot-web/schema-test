@@ -1,0 +1,7 @@
+{
+  "isValid": false,
+  "entities": [],
+  "errorCount": 1,
+  "warningCount": 0,
+  "_note": "Invalid JSON in script block triggers MALFORMED_JSONLD error"
+}
