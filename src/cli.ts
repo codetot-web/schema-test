@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0
 
 import { Command } from 'commander';
-import { validate, validateMarkup } from './validate/index.js';
+import { validate, validateMarkup, validateJsonLd } from './validate/index.js';
 import { formatAsText } from './format/index.js';
 import { readFileSync } from 'node:fs';
 
@@ -33,6 +33,29 @@ program
         const html = readFileSync(target, 'utf-8');
         result = validateMarkup(html);
       }
+
+      if (opts.format === 'json') {
+        process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+      } else {
+        process.stdout.write(formatAsText(result) + '\n');
+      }
+
+      process.exit(result.isValid ? 0 : 1);
+    } catch (error) {
+      process.stderr.write(`Error: ${(error as Error).message}\n`);
+      process.exit(2);
+    }
+  });
+
+program
+  .command('check-json')
+  .description('Validate raw JSON-LD (no HTML wrapper needed)')
+  .argument('<file>', 'Path to a .json or .jsonld file containing JSON-LD')
+  .option('--format <type>', 'Output format: text or json', 'text')
+  .action((file: string, opts: { format: string }) => {
+    try {
+      const content = readFileSync(file, 'utf-8');
+      const result = validateJsonLd(content);
 
       if (opts.format === 'json') {
         process.stdout.write(JSON.stringify(result, null, 2) + '\n');

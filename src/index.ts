@@ -14,4 +14,4 @@ export type {
 
 export { IssueCode } from './types.js';
 
-export { validate, validateMarkup, validateBatch } from './validate/index.js';
+export { validate, validateMarkup, validateJsonLd, validateBatch } from './validate/index.js';
