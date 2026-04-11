@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Graph ID References Test</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "org1",
+        "name": "TestCorp",
+        "makesOffer": [{"@id": "p1"}]
+      },
+      {
+        "@type": "Product",
+        "@id": "p1",
+        "name": "Widget",
+        "offers": {
+          "@type": "Offer",
+          "price": "10",
+          "priceCurrency": "USD"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body></body>
+</html>

@@ -90,17 +90,27 @@ export function checkValue(
     const nestedType = (value as Record<string, unknown>)['@type'];
     if (nestedType) {
       const nestedTypes = Array.isArray(nestedType) ? nestedType : [nestedType];
-      for (const nt of nestedTypes) {
-        if (typeof nt !== 'string') continue;
-        const bare = stripSchemaPrefix(nt);
-        // Check if nested type matches any expected type (including subtypes)
-        const matches = expectedTypes.some(expected =>
-          isSubTypeOf(bare, expected)
+      const bareTypes = nestedTypes
+        .filter((nt): nt is string => typeof nt === 'string')
+        .map(stripSchemaPrefix);
+
+      // Check if any nested type matches any expected type (including subtypes)
+      const entityExpected = expectedTypes.filter(t => isKnownType(t) && !dataTypes.has(t));
+      if (entityExpected.length > 0 && bareTypes.length > 0) {
+        const matches = bareTypes.some(bare =>
+          entityExpected.some(expected => isSubTypeOf(bare, expected))
         );
-        if (matches) return issues;
+        if (!matches) {
+          // SDTT flags this as INVALID_OBJECT error
+          issues.push({
+            severity: 'error',
+            code: IssueCode.INVALID_VALUE_TYPE,
+            message: `The property "${propertyName}" expects type ${entityExpected.join(' or ')}, but got ${bareTypes.join(', ')}.`,
+            path: `${entityPath}.${propertyName}`,
+            property: propertyName,
+          });
+        }
       }
-      // Nested entity type doesn't match expected types
-      // SDTT may or may not flag this — be lenient for now
     }
     return issues;
   }

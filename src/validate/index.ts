@@ -227,6 +227,10 @@ function validateEntity(
 
         resolvedValues.push(nestedEntity);
 
+        // Check nested entity type against property's expected types
+        const nestedValueIssues = checkValue(propName, nested, entityPath);
+        propIssues.push(...nestedValueIssues);
+
         // Propagate nested errors/warnings
         entityErrors.push(...nestedEntity.errors);
         entityWarnings.push(...nestedEntity.warnings);

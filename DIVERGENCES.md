@@ -11,8 +11,16 @@ with the reason and whether we plan to fix it.
 | # | Behavior | validator.schema.org | schemacraft-validator | Status |
 |---|----------|---------------------|----------------------|--------|
 | 1 | JavaScript rendering | Renders JS by default | Requires `--render-js` flag and puppeteer | By design |
-| 2 | Microdata extraction | Full support | Stub (not yet implemented) | Will fix |
-| 3 | RDFa extraction | Full support | Stub (not yet implemented) | Will fix |
+| 2 | Unknown property severity | `INVALID_PREDICATE` as ERROR | `UNKNOWN_PROPERTY` as warning | Investigating |
+| 3 | Entity grouping in output | Groups by root entity, nests referenced entities | Flat list from @graph, nested via @id resolution | By design |
+| 4 | Duplicate error counting | 1 error per property-value pair | May count more when same entity referenced via @id from multiple parents | Will fix |
+
+## Fixed in v1.1.0
+
+| # | Behavior | What Changed |
+|---|----------|-------------|
+| F1 | @id cross-references | Now resolves `{"@id": "..."}` within @graph — was treating them as missing-type entities |
+| F2 | Nested entity type checking | Now flags `INVALID_VALUE_TYPE` when nested entity type doesn't match `rangeIncludes` (e.g., `makesOffer` expects `Offer`, got `Product`) |
 
 ## Status Legend
 - **By design** — intentional difference, documented
