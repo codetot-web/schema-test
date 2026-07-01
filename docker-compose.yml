@@ -1,0 +1,19 @@
+services:
+  schema-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      # Set a secret for API auth (recommended for production)
+      # Usage: VALIDATOR_SECRET=your-secret docker compose up -d
+      - VALIDATOR_SECRET=${VALIDATOR_SECRET:-}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3001/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3

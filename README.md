@@ -340,25 +340,65 @@ The vocabulary is updated automatically via a weekly GitHub Action that checks f
 - **API services** — self-host a validation endpoint for your platform
 - **Development** — catch schema errors during development, not after indexing
 
-## Docker / Sidecar
+## Docker
 
-Run as a sidecar service alongside your application:
+### Quick Start
 
-```dockerfile
-FROM node:20-alpine
-RUN npm install -g schemacraft-validator
-EXPOSE 3001
-CMD ["schemacraft-validator", "serve", "--port", "3001"]
+```bash
+# Build and run
+docker compose up -d
+
+# Test it
+curl http://localhost:3001/health
+curl -X POST http://localhost:3001/validate \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://example.com"}'
 ```
+
+### Configuration
+
+| Env Variable | CLI Flag | Default | Description |
+|---|---|---|---|
+| `VALIDATOR_SECRET` | `--secret` | (none) | Require `X-Internal-Secret` header for API auth |
+| — | `--allowed-origins` | `*` | CORS allowed origins (comma-separated) |
+
+### With Auth
+
+```bash
+# Via env
+VALIDATOR_SECRET=my-secret docker compose up -d
+
+# Call with auth
+curl -X POST http://localhost:3001/validate \
+  -H "Content-Type: application/json" \
+  -H "X-Internal-Secret: my-secret" \
+  -d '{"url": "https://nhaphonet.vn"}'
+```
+
+### Restrict CORS
 
 ```yaml
 # docker-compose.yml
 services:
-  validator:
-    image: node:20-alpine
-    command: npx schemacraft-validator serve --port 3001 --secret ${VALIDATOR_SECRET}
-    ports:
-      - "3001:3001"
+  schema-test:
+    # ...
+    command: serve --port 3001 --allowed-origins "https://app1.com,https://app2.com"
+```
+
+### Verify
+
+```bash
+# Check the server is running
+curl http://localhost:3001/health
+
+# Validate a URL
+curl -X POST http://localhost:3001/validate -H "Content-Type: application/json" -d '{"url": "https://example.com"}'
+
+# Validate raw JSON-LD
+curl -X POST http://localhost:3001/validate -H "Content-Type: application/json" -d '{"jsonld": {"@context":"https://schema.org","@type":"Product","name":"Test"}}'
+
+# Batch validation
+curl -X POST http://localhost:3001/validate/batch -H "Content-Type: application/json" -d '{"urls": ["https://site1.com", "https://site2.com"]}'
 ```
 
 ## Requirements

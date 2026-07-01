@@ -2,17 +2,26 @@
 // Licensed under the Apache License, Version 2.0
 
 import express from 'express';
+import cors from 'cors';
 import type { Request, Response, NextFunction } from 'express';
 import { validate, validateMarkup, validateJsonLd, validateBatch } from './validate/index.js';
 import type { ValidateOptions } from './types.js';
 
 interface ServerOptions {
   secret?: string;
+  allowedOrigins?: string[];
 }
 
 export function createServer(options?: ServerOptions) {
   const app = express();
   app.use(express.json({ limit: '10mb' }));
+
+  // CORS — allow specific origins or all in dev
+  app.use(cors({
+    origin: options?.allowedOrigins ?? '*',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'X-Internal-Secret'],
+  }));
 
   // Optional secret-based auth for sidecar deployment
   if (options?.secret) {

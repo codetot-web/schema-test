@@ -9,7 +9,7 @@ import { readFileSync } from 'node:fs';
 const program = new Command();
 
 program
-  .name('schemacraft-validator')
+  .name('schema-test')
   .description('Schema.org structured data validator — accuracy-matched to validator.schema.org')
   .version('1.0.0');
 
@@ -74,13 +74,20 @@ program
   .command('serve')
   .description('Start the validation server')
   .option('--port <number>', 'Port to listen on', '3001')
-  .option('--secret <key>', 'Require X-Internal-Secret header for authentication')
-  .action(async (opts: { port: string; secret?: string }) => {
+  .option('--secret <key>', 'Require X-Internal-Secret header for authentication (default: VALIDATOR_SECRET env)')
+  .option('--allowed-origins <origins>', 'CORS allowed origins (comma-separated, default: *)')
+  .action(async (opts: { port: string; secret?: string; allowedOrigins?: string }) => {
     const { createServer } = await import('./server.js');
-    const server = createServer({ secret: opts.secret });
+    const secret = opts.secret || process.env.VALIDATOR_SECRET;
+    const allowedOrigins = opts.allowedOrigins
+      ? opts.allowedOrigins.split(',').map(s => s.trim())
+      : undefined;
+    const server = createServer({ secret, allowedOrigins });
     const port = parseInt(opts.port, 10);
     server.listen(port, () => {
-      process.stdout.write(`SchemaCraft Validator listening on http://127.0.0.1:${port}\n`);
+      process.stdout.write(`Schema.org Validator (schema-test) listening on http://0.0.0.0:${port}\n`);
+      if (secret) process.stdout.write('🔒 Auth: X-Internal-Secret header required\n');
+      process.stdout.write(`🌐 CORS: ${allowedOrigins ? allowedOrigins.join(', ') : '*'}\n`);
     });
   });
 
