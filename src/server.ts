@@ -8,7 +8,7 @@ import { validate, validateMarkup, validateJsonLd, validateBatch } from './valid
 import type { ValidateOptions } from './types.js';
 
 interface ServerOptions {
-  secret?: string;
+  bearerToken?: string;
   allowedOrigins?: string[];
 }
 
@@ -20,15 +20,20 @@ export function createServer(options?: ServerOptions) {
   app.use(cors({
     origin: options?.allowedOrigins ?? '*',
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'X-Internal-Secret'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 
-  // Optional secret-based auth for sidecar deployment
-  if (options?.secret) {
+  // Bearer token auth — only backend services can call
+  if (options?.bearerToken) {
     app.use((req: Request, res: Response, next: NextFunction) => {
-      const provided = req.headers['x-internal-secret'];
-      if (provided !== options.secret) {
-        res.status(401).json({ error: 'Unauthorized' });
+      const authHeader = req.headers['authorization'];
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        res.status(401).json({ error: 'Missing or invalid Authorization header. Use: Bearer <token>' });
+        return;
+      }
+      const token = authHeader.slice(7);
+      if (token !== options.bearerToken) {
+        res.status(401).json({ error: 'Invalid bearer token' });
         return;
       }
       next();

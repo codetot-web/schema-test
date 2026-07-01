@@ -74,19 +74,19 @@ program
   .command('serve')
   .description('Start the validation server')
   .option('--port <number>', 'Port to listen on', '3001')
-  .option('--secret <key>', 'Require X-Internal-Secret header for authentication (default: VALIDATOR_SECRET env)')
+  .option('--bearer-token <token>', 'Require Bearer token for API access (default: BEARER_TOKEN env)')
   .option('--allowed-origins <origins>', 'CORS allowed origins (comma-separated, default: *)')
-  .action(async (opts: { port: string; secret?: string; allowedOrigins?: string }) => {
+  .action(async (opts: { port: string; bearerToken?: string; allowedOrigins?: string }) => {
     const { createServer } = await import('./server.js');
-    const secret = opts.secret || process.env.VALIDATOR_SECRET;
+    const bearerToken = opts.bearerToken || process.env.BEARER_TOKEN;
     const allowedOrigins = opts.allowedOrigins
       ? opts.allowedOrigins.split(',').map(s => s.trim())
       : undefined;
-    const server = createServer({ secret, allowedOrigins });
+    const server = createServer({ bearerToken, allowedOrigins });
     const port = parseInt(opts.port, 10);
     server.listen(port, () => {
       process.stdout.write(`Schema.org Validator (schema-test) listening on http://0.0.0.0:${port}\n`);
-      if (secret) process.stdout.write('🔒 Auth: X-Internal-Secret header required\n');
+      if (bearerToken) process.stdout.write('🔒 Auth: Bearer token required\n');
       process.stdout.write(`🌐 CORS: ${allowedOrigins ? allowedOrigins.join(', ') : '*'}\n`);
     });
   });

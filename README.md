@@ -359,19 +359,19 @@ curl -X POST http://localhost:3001/validate \
 
 | Env Variable | CLI Flag | Default | Description |
 |---|---|---|---|
-| `VALIDATOR_SECRET` | `--secret` | (none) | Require `X-Internal-Secret` header for API auth |
+| `BEARER_TOKEN` | `--bearer-token` | (none) | Require `Authorization: Bearer <token>` for API access |
 | — | `--allowed-origins` | `*` | CORS allowed origins (comma-separated) |
 
 ### With Auth
 
 ```bash
 # Via env
-VALIDATOR_SECRET=my-secret docker compose up -d
+BEARER_TOKEN=my-secret-token docker compose up -d
 
 # Call with auth
 curl -X POST http://localhost:3001/validate \
   -H "Content-Type: application/json" \
-  -H "X-Internal-Secret: my-secret" \
+  -H "Authorization: Bearer my-secret-token" \
   -d '{"url": "https://nhaphonet.vn"}'
 ```
 

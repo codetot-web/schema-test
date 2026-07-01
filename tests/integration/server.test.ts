@@ -96,8 +96,8 @@ describe('Server', () => {
     }
   });
 
-  it('rejects requests without secret when configured', async () => {
-    const app = createServer({ secret: 'test-secret' });
+  it('rejects requests without bearer token when configured', async () => {
+    const app = createServer({ bearerToken: 'test-token' });
     const server = app.listen(0);
     try {
       const res = await request(server, 'GET', '/health');
@@ -107,12 +107,12 @@ describe('Server', () => {
     }
   });
 
-  it('accepts requests with correct secret', async () => {
-    const app = createServer({ secret: 'test-secret' });
+  it('accepts requests with correct bearer token', async () => {
+    const app = createServer({ bearerToken: 'test-token' });
     const server = app.listen(0);
     try {
       const res = await request(server, 'GET', '/health', undefined, {
-        'x-internal-secret': 'test-secret',
+        'Authorization': 'Bearer test-token',
       });
       expect(res.status).toBe(200);
     } finally {
